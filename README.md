@@ -20,6 +20,6 @@
 | [咪咕视频](https://www.miguvideo.com/) | | 否 |
 | [AcFun](https://www.acfun.cn/) | | 否 |
 | [快手](https://www.kuaishou.com/) | | 否 |
-| [斗鱼](https://www.douyu.com/) |需要 CryptoJS | 是 |
+| [搜狐视频](https://tv.sohu.com/) | | 否 |
 
 本软件用于任何其他非法目的，作者将不为您承担任何责任。
