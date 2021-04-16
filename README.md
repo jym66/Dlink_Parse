@@ -22,5 +22,6 @@
 | [快手](https://www.kuaishou.com/) | | 否 |
 | [搜狐视频](https://tv.sohu.com/) | | 否 |
 | [QQ音乐](https://y.qq.com/) | | 是 |
+| [网易云音乐](https://music.163.com/) | | 否 |
 
 本软件用于任何其他非法目的，作者将不为您承担任何责任。
