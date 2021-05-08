@@ -1,6 +1,7 @@
 from base64 import b64encode
 import requests
 
+
 class kwDES:
     def __init__(self):
         self.key = [121, 108, 122, 115, 120, 107, 119, 109]
@@ -171,7 +172,6 @@ class kwDES:
             i4 += 1
         for i7 in range(i5):
             for i8 in range(8):
-
                 jArr2[i7] = ((msg[(i7 * 8) + i8]) << (i8 * 8)) | jArr2[i7]
         jArr3 = [0] * ((((i5 + 1) * 8) + 1) // 8)
         self.a(j2, jArr)
