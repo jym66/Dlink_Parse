@@ -35,7 +35,7 @@
 
 |  名称    |  说明    |    是否需要nodejs  | 源代码 |
 | ---- | ---- | ---- | ---- |
-| [斗鱼](https://www.douyu.com/) | | 否 | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/DouYu.py) |
+| [斗鱼](https://www.douyu.com/) | | 是 | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/DouYu.py) |
 | [虎牙](https://www.huya.com/) | | 否 | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/huya.py) |
 
 本软件用于任何其他非法目的，作者将不为您承担任何责任。
