@@ -20,6 +20,7 @@
 | [咪咕视频](https://www.miguvideo.com/) | | 否 | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/migu.py) |
 | [AcFun](https://www.acfun.cn/) | | 否 | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/AcFun.py) |
 | [腾讯课堂](https://ke.qq.com/) |需要带上Cookie | 否 | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/ke_qq.py) |
+| [好看视频](https://haokan.baidu.com/) | | 否 | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/haokan.py) |
 
 
 ### 音乐网站
