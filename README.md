@@ -30,7 +30,7 @@
 | [QQ音乐](https://y.qq.com/) | | 是 | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/qqmusic.py) |
 | [网易云音乐](https://music.163.com/) | | 否 | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/music163.py) |
 | [酷我音乐](http://www.kuwo.cn/) | 算法来自App| 否 | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/kuwoMusic.py) |
-| [酷狗音乐](https://www.kugou.com/) | 算法来自App| 否 | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/kugou.py) |
+| [酷狗音乐](https://www.kugou.com/) | | 否 | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/kugou.py) |
 
 
 ### 直播网站
