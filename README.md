@@ -14,6 +14,7 @@
 |   [优酷](https://www.youku.com/)   |  | 否 | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/youku.py)  |
 |  [哔哩哔哩](https://www.bilibili.com/)    |可以用ffmpeg合并音视频  | 否 | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/bilibili.py) |
 |   [抖音](https://www.iesdouyin.com/)    | 需要无水印可以把 链接 playwm 换成play | 否 | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/douyin.py) |
+|   [抖音直播](https://www.iesdouyin.com/)    | | 否 | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/douyin_live.py) |
 | [芒果TV](https://www.mgtv.com) |  | 否 | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/MGTV.py) |
 |  [爱奇艺](https://www.iqiyi.com/) | [算法来自这里](https://github.com/ZSAIm/iqiyi-parser/blob/master/js/iqiyi_2019-08.js) | 是             | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/iqiyi.py) |
 | [PP视频](https://v.pptv.com/) | 需要 CryptoJS | 是 | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/pptv.py) |
