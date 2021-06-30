@@ -8,14 +8,14 @@ class xigua:
         self.url = url
         if "wid_try=1" not in self.url:
             self.url = self.url + "&wid_try=1"
-        self.nonce = self.getNonce()
         self.headers = {
             "referer": self.url,
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36",
         }
+        self.nonce = self.getNonce()
 
     def getNonce(self):
-        res = requests.get(self.url)
+        res = requests.get(self.url, headers=self.headers)
         return res.cookies.get("__ac_nonce")
 
     def getSign(self):
