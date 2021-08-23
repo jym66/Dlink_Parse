@@ -1,17 +1,33 @@
 import requests
 
+
 class migu:
     def __init__(self, url):
         self.url = url
-        self.cid = self.url.split("cid=")[-1]
         self.headers = {
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36¬"
         }
+        self.cid = self.get_cid_or_mgdbId()
+
+    def get_cid_or_mgdbId(self):
+        if 'cid' in self.url:
+            return self.url.split("?")[-1].split("=")[-1]
+        return self.mgdbId_cover_pid(self.url.split("?")[-1].split("=")[-1])
 
     def get_params(self):
         return {
             "contId": self.cid,
         }
+
+    def mgdbId_cover_pid(self, mgdbId):
+        url = f"https://app-sc.miguvideo.com/vms-worldcup/v3/basic-data/all-view-list/{mgdbId}/2/3000060800"
+        res = requests.get(url, headers=self.headers).json()['body']['replayList']
+        if len(res) > 1:
+            for k, i in enumerate(res):
+                print(f'{k}->{i["name"]}')
+            print("检测到多个视频请选择你要解析视频的序号-> ")
+            pid = res[int(input("==> "))]['pID']
+            return pid
 
     def str_cover_list(self, str):
         return list(str)
