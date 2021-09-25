@@ -31,7 +31,7 @@
 | 名称 | 说明 | 是否需要nodejs | 源代码 |
 | ---- | ---- | ---- | ---- |
 |  [腾讯](https://v.qq.com/)     | [cKey算法来自这里](https://github.com/ZSAIm/iqiyi-parser/blob/master/js/tencent.js) | ✅ | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/tencent.py) |
-|   [优酷](https://www.youku.com/)   |  | ❌ | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/youku.py)  |
+|   [优酷](https://www.youku.com/)   |记得带上cookie  | ❌ | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/youku.py)  |
 |  [哔哩哔哩](https://www.bilibili.com/)    |可以用ffmpeg合并音视频  | ❌ | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/bilibili.py) |
 |   [抖音](https://www.iesdouyin.com/)    | 需要无水印可以把 链接 playwm 换成play | ❌ | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/douyin.py) |
 |   [抖音直播](https://www.iesdouyin.com/)    | | ❌ | [SourceCode](https://github.com/jym66/Dlink_Parse/blob/master/douyin_live.py) |
