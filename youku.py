@@ -28,9 +28,9 @@ class YouKu:
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36"
         }
         res = requests.get(self.video_url, headers=headers).text
-        current_showid = re.findall("showid: '(\d+)'", res)[0]
-        video_id = re.findall("videoId: '(\d+)'", res)[0]
-        self.params = {"show_id": current_showid, "videoId": video_id}
+        current_showid = re.findall("id_(.*?).html", res)[0]
+        # video_id = re.findall("videoId: '(\d+)'", res)[0]
+        self.params = {"show_id": current_showid}
 
     def get_steal_params(self):
         return json.dumps({
@@ -123,7 +123,6 @@ class YouKu:
         }
         res = requests.get(self.url, params=self.join_params(), headers=headers)
         print(res.text)
-        return res.json()
 
 
 if __name__ == '__main__':
