@@ -43,4 +43,4 @@ class DouYu:
 
 
 if __name__ == '__main__':
-    DouYu().start()
+    DouYu("").start()
