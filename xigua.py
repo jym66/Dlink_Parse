@@ -1,3 +1,5 @@
+import hashlib
+
 import requests
 from Crypto.Cipher import AES
 import re
@@ -5,6 +7,10 @@ import json
 import base64
 import uuid
 from Crypto.Util.Padding import unpad
+import subprocess
+from functools import partial
+
+subprocess.Popen = partial(subprocess.Popen, encoding="utf-8")
 import execjs
 
 
@@ -53,9 +59,9 @@ class xigua:
                             cookies=self.cookie)
         return res.cookies.get("ttwid")
 
-    def aes_decrypt(self, encrypted_data, key, iv):
+    def aes_decrypt(self, encrypted_data, key, vid):
         key = key.encode("utf8")[:32]
-        iv = iv.encode("utf8")[:16]
+        iv = bytes.fromhex(hashlib.md5(f"{key.decode("utf8")}_{vid}".encode("utf8")).hexdigest())
         encrypted_data_bytes = base64.b64decode(encrypted_data)
         cipher = AES.new(key, AES.MODE_CBC, iv)
         decrypted_padded_data = cipher.decrypt(encrypted_data_bytes)
@@ -63,32 +69,28 @@ class xigua:
         result = f"{str(base64.b64decode(decrypted_data), encoding="utf-8")}&webid={self.cookie["UIFID"]}&wid={uuid.uuid4().hex}&fid={uuid.uuid4().hex}"
         return result
 
-    def decrypt_main_url(self, body, ptk, json_key):
+    def getVideoReouce(self, data):
+        jscode = execjs.compile(f"getVideoReouce={data}")
+        return jscode.call("getVideoReouce")
+
+    def decrypt_main_url(self, body, ptk, json_key, vid):
         # 可以自行解析需要的格式这边只解析了normal
         if json_key == "normal":
             for i in body['video_list']:
-                body['video_list'][i]['main_url'] = self.aes_decrypt(body['video_list'][i]['main_url'], ptk, ptk)
+                body['video_list'][i]['main_url'] = self.aes_decrypt(body['video_list'][i]['main_url'], ptk, vid)
                 body['video_list'][i]['backup_url_1'] = self.aes_decrypt(body['video_list'][i]['backup_url_1'], ptk,
-                                                                         ptk)
+                                                                         vid)
             print(body['video_list'])
-        # if json_key == "dash_120fps":
-        #     print(body['dynamic_video'])
-        #     body['dynamic_video']['main_url'] = self.aes_decrypt(body['dynamic_video']['main_url'], ptk, ptk)
-        #     for dynamic_video in body['dynamic_video']['dynamic_video_list']:
-        #         dynamic_video['main_url'] = self.aes_decrypt(dynamic_video['main_url'], ptk, ptk)
-        #         dynamic_video['backup_url_1'] = self.aes_decrypt(dynamic_video['backup_url_1'], ptk, ptk)
-        #     for dynamic_audio_list in body['dynamic_video']['dynamic_audio_list']:
-        #         dynamic_audio_list['main_url'] = self.aes_decrypt(dynamic_audio_list['main_url'], ptk, ptk)
-        #         dynamic_audio_list['backup_url_1'] = self.aes_decrypt(dynamic_audio_list['backup_url_1'], ptk, ptk)
 
     def start(self):
         html = requests.get(url=self.url, cookies=self.cookie, headers=self.headers)
         html.encoding = "utf8"
-        res = re.findall("window._SSR_HYDRATED_DATA=(.*?)</script>", html.text)[0].replace("undefined", 'null')
-        video_list = json.loads(res)["anyVideo"]['gidInformation']['packerData']['video']['videoResource']
+        res = re.findall(r"window\.getSSRHydratedData\s*=(.*)</script>", html.text, re.S)[0]
+        res = self.getVideoReouce(res)
+        video_list = res["anyVideo"]['gidInformation']['packerData']['video']['videoResource']
         for i in video_list:
             if i in self.q:
-                self.decrypt_main_url(video_list[i], video_list[i]['ptk'], i)
+                self.decrypt_main_url(video_list[i], video_list[i]['ptk'], i, video_list['vid'])
 
 
 if __name__ == '__main__':
