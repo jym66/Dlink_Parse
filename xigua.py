@@ -94,4 +94,4 @@ class xigua:
 
 
 if __name__ == '__main__':
-    xigua("").start()
+    xigua("https://www.ixigua.com/7405525381257626162?logTag=93d90688ada741c34133").start()

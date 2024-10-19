@@ -110,3 +110,13 @@ function auth (e) {
         return t
     }(e), 8 * e.length))
 }
+function addChar (e) {
+    var t, i, r, n, a = e;
+    for (t = 0; t < 4; t++)
+        for (i = 0; i < 2; i++)
+            for (r = 0; r < 4; r++)
+                n = (70 * t + 677 * i + 21 * r + 87 * t * i * r + 59) % 30,
+                n += n < 9 ? 48 : 88,
+                a += String.fromCharCode(n);
+    return a
+}
