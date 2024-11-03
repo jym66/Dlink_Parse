@@ -1,7 +1,13 @@
+import subprocess
 from email.quoprimime import decode
+import subprocess
+from functools import partial
 
 import requests
 from urllib.parse import urlencode
+
+subprocess.Popen = partial(subprocess.Popen, encoding="utf-8")
+import execjs
 
 
 class DouYin:
@@ -16,7 +22,6 @@ class DouYin:
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
             "Cookie": self.cookie,
         }
-        self.a_bogus_url = "http://47.76.52.210/get_ab"  # 暂时先提供一个获取接口，后续开源
         self.video_url = "https://www.douyin.com/aweme/v1/web/aweme/detail/"
         self.cookies = {}
         for item in self.cookie.split('; '):
@@ -24,9 +29,14 @@ class DouYin:
                 key, value = item.split('=', 1)
                 self.cookies[key] = value
 
+    def get_a_bogus(self, params, ua):
+        # 用js实现的，可以自行改写成别的语言版本
+        jscode = execjs.compile(open("./js/dy.js", encoding="utf-8").read())
+        ctx = jscode.call("get_a_bogus", params, ua)
+        return ctx
+
     def get_params(self, aweme_id):
         # 将cookie字符串拆分成键值对
-
         params = {
             "device_platform": "webapp",
             "aid": "6383",
@@ -54,31 +64,28 @@ class DouYin:
             "platform": "PC",
             "downlink": "10",
             "effective_type": "4g",
-            "round_trip_time": "100",
-            "webid": "7432163470647150130",
-            "uifid": self.cookies["UIFID"],
-            "msToken": "vH0DvUu1rqyf9x9kB4N3JOJYh7Aj15xpJ2nKT09keEyDduGA_pwbKMkQdynI3e2K-oXyv2FtBU8UvhnHerJIAfPW9Jbzx0TT-Hj5gRg_yEDLcmBx4V_nQBjBoYMcmI4Zlj-s1hoZVISRZtAB9ZjCH1VMHsaKSTT-XW3u7VYnfhEfU_sm6FXReA=="
+            "round_trip_time": "50",
+            "webid": "7432962412016240178",
+            # "uifid": "63bdc4b4b456901f349a081bfd3a24da10a1c6623f0a2d5eadd83f51c9f4d112da4a060d6a60033c789dae6e72bd6ae27e8fafa4126646d08d4298a45dab3a8f52beaeb91023ead87c5396f2d2c53c2a",
+            "msToken": "arAHq-Wn0mHQslyoOvoEQglvThVW7h_7HtyoAdzzq6Gbu7rpl09XFtHpE9g_HsBt1GmQaKiJALUj0590_xz3G4a7zWj8iAilqfzsnYsLrbyg6WY4my9p16tKmWL8YCjUK8uOL6FkFcRJ82YR1kKwhJ0bxMim-mgLFDaqdjam9o2_06Fip9oa3Q=="
         }
         url_params = urlencode(params)
-        a_bogus = requests.post(self.a_bogus_url, json={"params": url_params, "ua": self.headers["User-Agent"]}).json()
-        if a_bogus["error"] == 0:
-            params["a_bogus"] = a_bogus["a_bogus"]
-        params["verifyFp"] = "verify_m2y8ko6y_A8gkuYBl_bYrD_4HO8_9u2D_CrteLrO2Ucln"
-        params["fp"] = "verify_m2y8ko6y_A8gkuYBl_bYrD_4HO8_9u2D_CrteLrO2Ucln"
+        a_bogus = self.get_a_bogus(url_params, self.headers["User-Agent"])
+        params["a_bogus"] = a_bogus
+        params["verifyFp"] = "verify_m31bbntm_ie8aqBf6_Zeo2_4UFn_84QI_VebYb6IKFqjR"
+        params["fp"] = "verify_m31bbntm_ie8aqBf6_Zeo2_4UFn_84QI_VebYb6IKFqjR"
         return params
 
     def start(self):
-
         aweme_id = self.url.split("/")[-1]
         headers = self.headers.copy()
         headers["Referer"] = f"https://www.douyin.com/video/{aweme_id}"
-        # headers['uifid'] = self.cookies["UIFID"]
         headers["Host"] = "www.douyin.com"
         params = self.get_params(aweme_id)
         res = requests.get(url=self.video_url, headers=headers, params=params)
-        # 如果发现响应为空，可能是因为msToken的问题，但是msToken还不知道如何生成的,可以去浏览器复制一下
+        # 有时候响应还是为空不知道为啥
         print(res.text)
 
 
 if __name__ == '__main__':
-    DouYin("https://www.douyin.com/video/7431771207013272868").start()
+    DouYin("https://www.douyin.com/video/7414051930047106342").start()
